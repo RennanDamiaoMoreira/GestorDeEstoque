@@ -30,7 +30,7 @@ public class EstoqueDao extends DAO{
 			fecharConexao(conexao, comando);
 		}
 	}
-	public boolean alterar (Estoque estoque) {
+	public boolean alterar (Estoque estoque) throws ClassNotFoundException, SQLException {
 		Connection conexao = null;
 		PreparedStatement comando = null;
 		try {
@@ -45,5 +45,6 @@ public class EstoqueDao extends DAO{
 	}finally {
 		
 	}
+		return false;
 	}
 }

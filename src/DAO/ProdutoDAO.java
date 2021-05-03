@@ -65,23 +65,24 @@ public class ProdutoDao extends DAO{
 	}
 		return null;
 	}
-	public ArrayList<Produto> obterProdutos(int id) throws ClassNotFoundException, SQLException {
+	public ArrayList<Produto> obterProdutos() throws ClassNotFoundException, SQLException {
 		Connection conexao = null;
 		PreparedStatement comando = null;
 		ArrayList<Produto>lista =new ArrayList<>();
 		try {
 			conexao = BD.getInstancia().getConexao();
-			comando = conexao.prepareStatement("select * From Produto where id=?");
-			comando.setInt(1, id);
+			comando = conexao.prepareStatement("select * From Produto");
+			
 			
 		ResultSet resultado = comando.executeQuery();
 		while (resultado.next()) {
-			Produto produto = new Produto(id, resultado.getString("nome"), resultado.getString("descricao"));
-			return produto;
+			Produto produto = new Produto(Integer.parseInt(resultado.getString("id")), resultado.getString("nome"), resultado.getString("descricao"));
+			
+			lista.add(produto);
 		}
+		return lista;
 	}finally {
 		fecharConexao(conexao, comando);
 	}
-		return null;
 	}
 }

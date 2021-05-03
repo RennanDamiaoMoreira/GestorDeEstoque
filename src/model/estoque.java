@@ -1,11 +1,11 @@
 package model;
 
-public class estoque {
+public class Estoque {
 private Produto produto;
 private int quantidade;
 private String tamanho;
 
-public estoque(Produto produto, int quantidade, String tamanho) {
+public Estoque(Produto produto, int quantidade, String tamanho) {
 	super();
 	this.produto = produto;
 	this.quantidade = quantidade;

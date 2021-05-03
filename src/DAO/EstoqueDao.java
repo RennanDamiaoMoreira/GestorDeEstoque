@@ -1,11 +1,13 @@
 package DAO;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import DAO.DAO;
 
 import model.Estoque;
+import model.Produto;
 
 public class EstoqueDao extends DAO{
 	private static EstoqueDao instancia = new EstoqueDao();
@@ -39,12 +41,35 @@ public class EstoqueDao extends DAO{
 			comando.setInt(1, estoque.getQuantidade());
 			comando.setInt(2, estoque.getProduto().getId());
 			comando.setString(3, estoque.getTamanho());
-	
-			
-		
+		comando.execute();
 	}finally {
-		
+		fecharConexao(conexao, comando);
 	}
 		return false;
+	}
+	public Estoque obterEstoque(int produto, String tamanho) throws ClassNotFoundException, SQLException {
+		Connection conexao = null;
+		PreparedStatement comando = null;
+		try {
+			conexao = BD.getInstancia().getConexao();
+			comando = conexao.prepareStatement("select * From estoque where produto=? and tamanho=?");
+			comando.setInt(1, produto);
+			comando.setString(2, tamanho);
+		ResultSet resultado = comando.executeQuery();
+		while (resultado.next()) {
+			PreparedStatement produtor = conexao.prepareStatement("select * from produto where id = ?");
+			produtor.setInt(1, produto);
+			ResultSet produtoResult=produtor.executeQuery();
+			Produto p = null;
+			while (produtoResult.next()) {
+				p=new Produto(produtoResult.getInt("id"), produtoResult.getString("nome"), produtoResult.getString("descricao"));
+			}
+			Estoque estoque = new Estoque(p, resultado.getInt("quantidade"), tamanho);
+			return estoque;
+		}
+	}finally {
+		fecharConexao(conexao, comando);
+	}
+		return null;
 	}
 }

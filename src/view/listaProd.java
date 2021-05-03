@@ -40,6 +40,7 @@ public class listaProd extends JFrame {
 		setContentPane(contentPane);
 		
 		JList<String> list = new JList<String>();
+		
 		contentPane.add(list, BorderLayout.CENTER);
 	}
 

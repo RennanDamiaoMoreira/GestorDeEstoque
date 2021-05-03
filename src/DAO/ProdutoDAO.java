@@ -65,7 +65,7 @@ public class ProdutoDao extends DAO{
 	}
 		return null;
 	}
-	public ArrayList<Produto> obterProdutos() throws ClassNotFoundException, SQLException {
+	public ArrayList<Produto> obterProdutos() {
 		Connection conexao = null;
 		PreparedStatement comando = null;
 		ArrayList<Produto>lista =new ArrayList<>();
@@ -81,8 +81,20 @@ public class ProdutoDao extends DAO{
 			lista.add(produto);
 		}
 		return lista;
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}finally {
-		fecharConexao(conexao, comando);
+		try {
+			fecharConexao(conexao, comando);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	return lista;
 	}
 }

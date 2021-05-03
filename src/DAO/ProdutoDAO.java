@@ -21,10 +21,10 @@ public class ProdutoDao extends DAO{
 		PreparedStatement comando = null;
 		try {
 			conexao = BD.getInstancia().getConexao();
-			comando = conexao.prepareStatement("insert into Produto (produto,tamanho,quantidade) values (?,?,?);");
-			comando.setInt(1, Produto.getProduto().getId());
-			comando.setString(2, Produto.getTamanho());
-			comando.setInt(3, Produto.getQuantidade());
+			comando = conexao.prepareStatement("insert into Produto (nome,descricao) values (?,?);");
+			comando.setString(1, Produto.getNome);
+			comando.setString(2, Produto.getDescricao());
+			
 			comando.executeUpdate();
 
 		} finally {
@@ -36,35 +36,28 @@ public class ProdutoDao extends DAO{
 		PreparedStatement comando = null;
 		try {
 			conexao = BD.getInstancia().getConexao();
-			comando = conexao.prepareStatement("update Produto quantidade=? where produto=? and tamanho=?");
-			comando.setInt(1, Produto.getQuantidade());
-			comando.setInt(2, Produto.getProduto().getId());
-			comando.setString(3, Produto.getTamanho());
+			comando = conexao.prepareStatement("update Produto nome=?,descricao=? where id=? ");
+			comando.setString(1, Produto.getNome());
+			comando.setString(2, Produto.getDescricao());
+			comando.setInt(3, Produto.getId());
 		comando.execute();
 	}finally {
 		fecharConexao(conexao, comando);
 	}
 		return false;
 	}
-	public Produto obterProduto(int produto, String tamanho) throws ClassNotFoundException, SQLException {
+	public Produto obterProduto(int id) throws ClassNotFoundException, SQLException {
 		Connection conexao = null;
 		PreparedStatement comando = null;
 		try {
 			conexao = BD.getInstancia().getConexao();
-			comando = conexao.prepareStatement("select * From Produto where produto=? and tamanho=?");
-			comando.setInt(1, produto);
-			comando.setString(2, tamanho);
+			comando = conexao.prepareStatement("select * From Produto where id=?");
+			comando.setInt(1, id);
+			
 		ResultSet resultado = comando.executeQuery();
 		while (resultado.next()) {
-			PreparedStatement produtor = conexao.prepareStatement("select * from produto where id = ?");
-			produtor.setInt(1, produto);
-			ResultSet produtoResult=produtor.executeQuery();
-			Produto p = null;
-			while (produtoResult.next()) {
-				p=new Produto(produtoResult.getInt("id"), produtoResult.getString("nome"), produtoResult.getString("descricao"));
-			}
-			Produto Produto = new Produto(p, resultado.getInt("quantidade"), tamanho);
-			return Produto;
+			Produto produto = new Produto(id, resultado.getString("nome"), resultado.getString("descricao"));
+			return produto;
 		}
 	}finally {
 		fecharConexao(conexao, comando);

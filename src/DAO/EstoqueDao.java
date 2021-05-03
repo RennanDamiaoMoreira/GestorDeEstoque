@@ -39,9 +39,11 @@ public class EstoqueDao extends DAO{
 			comando.setInt(1, estoque.getQuantidade());
 			comando.setInt(2, estoque.getProduto().getId());
 			comando.setString(3, estoque.getTamanho());
+	
 			
-			
-		}
+		
+	}finally {
+		
 	}
-
+	}
 }

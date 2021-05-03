@@ -22,7 +22,7 @@ public class ProdutoDao extends DAO{
 		try {
 			conexao = BD.getInstancia().getConexao();
 			comando = conexao.prepareStatement("insert into Produto (nome,descricao) values (?,?);");
-			comando.setString(1, Produto.getNome);
+			comando.setString(1, Produto.getNome());
 			comando.setString(2, Produto.getDescricao());
 			
 			comando.executeUpdate();

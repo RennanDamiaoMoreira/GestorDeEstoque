@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Produto;
-import model.Produto;
 
-public class ProdutoDAO extends DAO{
+
+public class ProdutoDao extends DAO{
 	private static ProdutoDao instancia = new ProdutoDao();
 
 	public static ProdutoDao getInstacia() {

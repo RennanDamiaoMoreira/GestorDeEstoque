@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Produto;
 
@@ -49,6 +50,25 @@ public class ProdutoDao extends DAO{
 	public Produto obterProduto(int id) throws ClassNotFoundException, SQLException {
 		Connection conexao = null;
 		PreparedStatement comando = null;
+		try {
+			conexao = BD.getInstancia().getConexao();
+			comando = conexao.prepareStatement("select * From Produto where id=?");
+			comando.setInt(1, id);
+			
+		ResultSet resultado = comando.executeQuery();
+		while (resultado.next()) {
+			Produto produto = new Produto(id, resultado.getString("nome"), resultado.getString("descricao"));
+			return produto;
+		}
+	}finally {
+		fecharConexao(conexao, comando);
+	}
+		return null;
+	}
+	public ArrayList<Produto> obterProdutos(int id) throws ClassNotFoundException, SQLException {
+		Connection conexao = null;
+		PreparedStatement comando = null;
+		ArrayList<Produto>lista =new ArrayList<>();
 		try {
 			conexao = BD.getInstancia().getConexao();
 			comando = conexao.prepareStatement("select * From Produto where id=?");

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DAO.BD;
+import DAO.EstoqueDao;
+import model.Estoque;
 
 
 public class Teste {
@@ -20,6 +22,12 @@ public class Teste {
 		
 
 		try {
+			
+			Estoque e = EstoqueDao.getInstacia().obterEstoque(1, "1");
+			System.out.println(e.getProduto().getNome());
+			
+			
+			
 			conexao = BD.getInstancia().getConexao();
 			comando = conexao.prepareStatement("SELECT * FROM produto;");
 			ResultSet resultado = comando.executeQuery();

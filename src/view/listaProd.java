@@ -24,16 +24,18 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.ScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class listaProd extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JLabel lblNewLabel;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
+	private JTextField nome;
+	private JTextField descricao;
+	private JLabel id;
+	private JButton inserir;
+	private JButton alterar;
+	private JButton apaga;
 	private JTable table;
 
 	/**
@@ -64,19 +66,31 @@ public class listaProd extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		nome = new JTextField();
+		nome.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		descricao = new JTextField();
+		descricao.setColumns(10);
 		
-		lblNewLabel = new JLabel("New label");
+		id = new JLabel("");
 		
-		btnNewButton = new JButton("New button");
+		inserir = new JButton("Inserir");
+		inserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Produto p = new Produto(nome.getText(), descricao.getText());
+				ProdutoDao.getInstacia().gravar(p);
+				
+				
+			}
+		});
 		
-		btnNewButton_1 = new JButton("New button");
+		alterar = new JButton("Alterar");
+		alterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
-		btnNewButton_2 = new JButton("New button");
+		apaga = new JButton("Apagar");
 		
 		table = new JTable();
 		
@@ -91,18 +105,18 @@ public class listaProd extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(26)
-							.addComponent(lblNewLabel)
+							.addComponent(id)
 							.addGap(29)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(descricao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNewButton)
+							.addComponent(inserir)
 							.addGap(18)
-							.addComponent(btnNewButton_1)
+							.addComponent(alterar)
 							.addGap(18)
-							.addComponent(btnNewButton_2))
+							.addComponent(apaga))
 						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -121,14 +135,14 @@ public class listaProd extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(id)
+						.addComponent(nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(descricao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_1)
-						.addComponent(btnNewButton_2))
+						.addComponent(inserir)
+						.addComponent(alterar)
+						.addComponent(apaga))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()

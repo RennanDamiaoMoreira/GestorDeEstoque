@@ -78,7 +78,12 @@ public class listaProd extends JFrame {
 		inserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Produto p = new Produto(nome.getText(), descricao.getText());
-				ProdutoDao.getInstacia().gravar(p);
+				try {
+					ProdutoDao.getInstacia().gravar(p);
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				
 			}

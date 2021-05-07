@@ -8,6 +8,7 @@ import DAO.DAO;
 
 import model.Estoque;
 import model.Produto;
+import model.Tamanho;
 
 public class EstoqueDao extends DAO{
 	private static EstoqueDao instancia = new EstoqueDao();
@@ -24,7 +25,7 @@ public class EstoqueDao extends DAO{
 			conexao = BD.getInstancia().getConexao();
 			comando = conexao.prepareStatement("insert into estoque (produto,tamanho,quantidade) values (?,?,?);");
 			comando.setInt(1, estoque.getProduto().getId());
-			comando.setString(2, estoque.getTamanho());
+			comando.setInt(2, estoque.getTamanho().getId());
 			comando.setInt(3, estoque.getQuantidade());
 			comando.executeUpdate();
 
@@ -40,21 +41,21 @@ public class EstoqueDao extends DAO{
 			comando = conexao.prepareStatement("update estoque quantidade=? where produto=? and tamanho=?");
 			comando.setInt(1, estoque.getQuantidade());
 			comando.setInt(2, estoque.getProduto().getId());
-			comando.setString(3, estoque.getTamanho());
+			comando.setInt(3, estoque.getTamanho().getId());
 		comando.execute();
 	}finally {
 		fecharConexao(conexao, comando);
 	}
 		return false;
 	}
-	public Estoque obterEstoque(int produto, String tamanho) throws ClassNotFoundException, SQLException {
+	public Estoque obterEstoque(int produto, Tamanho tamanho) throws ClassNotFoundException, SQLException {
 		Connection conexao = null;
 		PreparedStatement comando = null;
 		try {
 			conexao = BD.getInstancia().getConexao();
 			comando = conexao.prepareStatement("select * From estoque where produto=? and tamanho=?");
 			comando.setInt(1, produto);
-			comando.setString(2, tamanho);
+			comando.setInt(2, tamanho.getId());
 		ResultSet resultado = comando.executeQuery();
 		while (resultado.next()) {
 			PreparedStatement produtor = conexao.prepareStatement("select * from produto where id = ?");

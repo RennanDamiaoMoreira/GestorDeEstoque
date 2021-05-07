@@ -3,9 +3,9 @@ package model;
 public class Estoque {
 private Produto produto;
 private int quantidade;
-private String tamanho;
+private Tamanho tamanho;
 
-public Estoque(Produto produto, int quantidade, String tamanho) {
+public Estoque(Produto produto, int quantidade, Tamanho tamanho) {
 	super();
 	this.produto = produto;
 	this.quantidade = quantidade;
@@ -23,10 +23,11 @@ public int getQuantidade() {
 public void setQuantidade(int quantidade) {
 	this.quantidade = quantidade;
 }
-public String getTamanho() {
+public Tamanho getTamanho() {
 	return tamanho;
 }
-public void setTamanho(String tamanho) {
+public void setTamanho(Tamanho tamanho) {
 	this.tamanho = tamanho;
 }
+
 }
